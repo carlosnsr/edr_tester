@@ -10,6 +10,10 @@ USAGE = <<~EOF
 EOF
 
 def parse_options
+  if ARGV.length == 0
+    puts USAGE
+  end
+
   opts = GetoptLong.new(
     ['--help', '-h', GetoptLong::NO_ARGUMENT],
   )

@@ -11,4 +11,12 @@ describe '.parse_options' do
       expect { parse_options }.to output(USAGE).to_stdout
     end
   end
+
+  context 'when receiving no options' do
+    let (:argv) { [] }
+
+    it 'displays the usage text' do
+      expect { parse_options }.to output(USAGE).to_stdout
+    end
+  end
 end
