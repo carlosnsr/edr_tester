@@ -18,7 +18,7 @@ def parse_options
   opts = GetoptLong.new(
     ['--help', '-h', GetoptLong::NO_ARGUMENT],
   )
-  opts.quiet = true # suppresses unwanted STDERR
+  opts.quiet = true # silences unwanted STDERR
 
   opts.each do |opt, arg|
     case opt
@@ -28,7 +28,7 @@ def parse_options
     end
   end
 
-rescue GetoptLong::InvalidOption => error
+rescue GetoptLong::Error => error
   puts error.message
   puts USAGE
   return :invalid
