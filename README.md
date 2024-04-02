@@ -2,7 +2,7 @@
 
 ## TODO
 
-- [ ] bin/shell script
+- [x] bin/shell script
 - [ ] run on windows/linux (developed on mac)
 - [ ] start a process
     - [ ] cmd line params: exec file w/optional args for exec file
