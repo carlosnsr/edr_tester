@@ -8,6 +8,7 @@
 - [ ] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [ ] run a process
+    - [ ] log it
     - [ ] update readme
 - [ ] create a file
     - [ ] cmd line params: file path, file type
@@ -15,6 +16,7 @@
     - [ ] create file at location
     - [ ] path exists?
     - [ ] populate with random/preset stuff
+    - [ ] log it
     - [ ] update readme
 - [ ] modify a file
     - [ ] cmd line params: file path, file type
@@ -22,6 +24,7 @@
     - [ ] exists?
     - [ ] bin? add some crap to the end
     - [ ] text? add some crap to the end
+    - [ ] log it
     - [ ] update readme
 - [ ] delete a file
     - [ ] cmd line params: file path
@@ -29,9 +32,11 @@
     - [ ] exists?
     - [ ] delete it
     - [ ] success?
+    - [ ] log it
     - [ ] update readme
 - [ ] network connection and transmit
     - [ ] cmd line params: url, maybe data
     - [ ] connects?
     - [ ] response?
+    - [ ] log it
     - [ ] update readme
