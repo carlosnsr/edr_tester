@@ -14,10 +14,13 @@ USAGE = <<~EOF
                   is executed.
 EOF
 
+# destructively parses ARGV and returns a hash with the parameters for the given operation
+#    e.g. { op: :exec, file_path: '/bin/echo', args: 'hello' }
+# returns { op: :none } if an error occurred or no further action was required
 def parse_options
   if ARGV.length == 0
     puts USAGE
-    return :none
+    return { op: :none }
   end
 
   opts = GetoptLong.new(
@@ -30,14 +33,14 @@ def parse_options
     case opt
       when '--help'
         puts USAGE
-        return :help
+        return { op: :none }
       when '--exec'
-        result = [:exec, arg.to_s]
+        result = { op: :exec, file_path: arg.to_s }
         # collect pass-along arguments
         if ARGV.length > 0
           ARGV.shift # discards "--"
           args = ARGV.shift(ARGV.length).map(&:to_str)
-          result.concat(args)
+          result[:args] = args
         end
         return result
     end
@@ -46,5 +49,5 @@ def parse_options
 rescue GetoptLong::Error => error
   puts error.message
   puts USAGE
-  return :invalid
+  return { op: :none }
 end
