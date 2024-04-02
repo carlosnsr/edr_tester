@@ -12,6 +12,7 @@ EOF
 def parse_options
   if ARGV.length == 0
     puts USAGE
+    return :none
   end
 
   opts = GetoptLong.new(
@@ -22,6 +23,7 @@ def parse_options
     case opt
       when '--help'
         puts USAGE
+        return :help
     end
   end
 end
