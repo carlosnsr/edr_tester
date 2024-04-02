@@ -32,4 +32,17 @@ describe '.parse_options' do
       suppress_out { expect(parse_options).to eql(:none) }
     end
   end
+
+  context 'when receiving an invalid option' do
+    let (:argv) { ['--invalid'] }
+
+    it 'displays the usage text' do
+      expect { parse_options }
+        .to output("unrecognized option `#{argv[0]}'\n#{USAGE}").to_stdout
+    end
+
+    it 'returns :invalid' do
+      suppress_out { expect(parse_options).to eql(:invalid) }
+    end
+  end
 end
