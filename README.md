@@ -6,7 +6,7 @@
 - [x] handle command line arguments
 - [ ] run on windows/linux (developed on mac)
 - [ ] start a process
-    - [ ] cmd line params: exec file w/optional args for exec file
+    - [x] cmd line params: exec file w/optional args for exec file
     - [ ] run a process
     - [ ] update readme
 - [ ] create a file
