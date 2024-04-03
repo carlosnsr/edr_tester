@@ -15,8 +15,7 @@ edr_tester [--exec | -x] <file path>
 edr_tester [--exec | -x] <file path> -- <arguments>
 `
 
-- the given executable file (with the given arguments, if any) will be executed
-- that the file was run will be logged
+- the given executable file will be executed (with the given arguments, if any)
 
 ## TODO
 
@@ -26,7 +25,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - [ ] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [ ] path exists?
-    - [ ] run a process
+    - [x] run a process
         - [ ] non-blocking
         - [ ] time out if process runs too long
     - [ ] log it
