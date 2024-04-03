@@ -107,4 +107,35 @@ describe '.parse_options' do
       })
     end
   end
+
+  context 'when receiving the create option without a file path' do
+    let (:argv) { ['--create'] }
+
+    it 'displays the error message and the usage text' do
+      message = "option `#{argv[0]}' requires an argument"
+      expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
+    end
+
+    it 'returns :none' do
+      suppress_stdout { expect(parse_options).to eql(op: :none) }
+    end
+  end
+
+  context 'when receiving the create option with a file path' do
+    let (:file_path) { './tmp/new_file' }
+    let (:argv) { ['--create', file_path] }
+
+    it 'returns :create, file path, and default type' do
+      expect(parse_options).to eql(op: :create, file_path: file_path, file_type: :text)
+    end
+  end
+
+  context 'when receiving the create option with a file path and type' do
+    let (:file_path) { './tmp/new_file' }
+    let (:argv) { ['--create', file_path, '--bin'] }
+
+    it 'returns :create, file path, and default type' do
+      expect(parse_options).to eql(op: :create, file_path: file_path, file_type: :binary)
+    end
+  end
 end

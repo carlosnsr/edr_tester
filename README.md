@@ -39,7 +39,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] create a file
-    - [ ] cmd line params: file path, file type
+    - [x] cmd line params: file path, file type
     - [ ] [QUESTION] what types? bin, text, what?
     - [ ] create file at location
     - [ ] path exists?
