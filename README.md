@@ -6,14 +6,29 @@ EDR Tester is used to test an Endpoint Detection and Response (EDR) agent.  An A
 
 This EDR Tester generates activity by being called with the appropriate command line arguments.  One can then check the log file of the EDR Tester and see whether that activity was picked up by the EDR
 
+## Usage
+
+### Executing an execuatable file
+
+`
+edr_tester [--exec | -x] <file path>
+edr_tester [--exec | -x] <file path> -- <arguments>
+`
+
+- the given executable file (with the given arguments, if any) will be executed
+- that the file was run will be logged
+
 ## TODO
 
 - [x] bin/shell script
 - [x] handle command line arguments
-- [ ] run on windows/linux (developed on mac)
+- [ ] run on windows/linux (developed and runs on mac)
 - [ ] start a process
     - [x] cmd line params: exec file w/optional args for exec file
+    - [ ] path exists?
     - [ ] run a process
+        - [ ] non-blocking
+        - [ ] time out if process runs too long
     - [ ] log it
     - [ ] update readme
 - [ ] create a file
