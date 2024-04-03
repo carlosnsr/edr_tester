@@ -16,6 +16,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.1)
+    timecop (0.9.8)
 
 PLATFORMS
   ruby
@@ -24,6 +25,7 @@ PLATFORMS
 DEPENDENCIES
   getoptlong (~> 0.2.1)
   rspec (~> 3.13)
+  timecop (~> 0.9.8)
 
 RUBY VERSION
    ruby 3.2.2p53
