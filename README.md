@@ -1,5 +1,11 @@
 # EDR Tester
 
+## Concept
+
+EDR Tester is used to test an Endpoint Detection and Response (EDR) agent.  An ADL agent listens for activity in an environment.
+
+This EDR Tester generates activity by being called with the appropriate command line arguments.  One can then check the log file of the EDR Tester and see whether that activity was picked up by the EDR
+
 ## TODO
 
 - [x] bin/shell script
