@@ -16,6 +16,12 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 `
 
 - the given executable file will be executed (with the given arguments, if any)
+- the following details will be logged:
+    - timestamp of start time
+    - username that started the process
+    - process name
+    - process command line
+    - process ID
 
 ## TODO
 
@@ -28,7 +34,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [x] run a process
         - [ ] non-blocking
         - [ ] time out if process runs too long
-    - [ ] log it
+    - [x] log it
     - [ ] update readme
 - [ ] create a file
     - [ ] cmd line params: file path, file type

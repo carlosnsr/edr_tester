@@ -31,7 +31,12 @@ describe '.exec_file' do
     end
 
     it 'returns the start time, user, cmd, and pid' do
-      expect(exec_file(file_path)).to eq([time, user, cmd, pid])
+      expect(exec_file(file_path)).to eq({
+        start_time: time,
+        username: user,
+        process_command_line: cmd,
+        process_id: pid
+      })
     end
   end
 
@@ -46,7 +51,12 @@ describe '.exec_file' do
     end
 
     it 'returns the start time, user, cmd, and pid' do
-      expect(exec_file(file_path, args)).to eq([time, user, cmd, pid])
+      expect(exec_file(file_path, args)).to eq({
+        start_time: time,
+        username: user,
+        process_command_line: cmd,
+        process_id: pid
+      })
     end
   end
 
