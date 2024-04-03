@@ -16,8 +16,8 @@ describe '.parse_options' do
       expect { parse_options }.to output(USAGE).to_stdout
     end
 
-    it 'returns :help' do
-      suppress_stdout { expect(parse_options).to eql(:help) }
+    it 'returns :none' do
+      suppress_stdout { expect(parse_options).to eql(op: :none) }
     end
   end
 
@@ -29,7 +29,7 @@ describe '.parse_options' do
     end
 
     it 'returns :none' do
-      suppress_stdout { expect(parse_options).to eql(:none) }
+      suppress_stdout { expect(parse_options).to eql(op: :none) }
     end
   end
 
@@ -37,12 +37,12 @@ describe '.parse_options' do
     let (:argv) { ['--invalid'] }
 
     it 'displays the error message and the usage text' do
-      expect { parse_options }
-        .to output("unrecognized option `#{argv[0]}'\n#{USAGE}").to_stdout
+      message = "unrecognized option `#{argv[0]}'"
+      expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
     end
 
-    it 'returns :invalid' do
-      suppress_stdout { expect(parse_options).to eql(:invalid) }
+    it 'returns :none' do
+      suppress_stdout { expect(parse_options).to eql(op: :none) }
     end
   end
 
@@ -65,10 +65,46 @@ describe '.parse_options' do
             .to output("#{message}\n#{USAGE}").to_stdout
         end
 
-        it 'returns :invalid' do
-          suppress_stdout { expect(parse_options).to eql(:invalid) }
+        it 'returns :none' do
+          suppress_stdout { expect(parse_options).to eql(op: :none) }
         end
       end
+    end
+  end
+
+  context 'when receiving the exec option without a file path' do
+    let (:argv) { ['--exec'] }
+
+    it 'displays the error message and the usage text' do
+      message = "option `#{argv[0]}' requires an argument"
+      expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
+    end
+
+    it 'returns :none' do
+      suppress_stdout { expect(parse_options).to eql(op: :none) }
+    end
+  end
+
+  context 'when receiving the exec option with a file path' do
+    let (:file_path) { '/bin/echo' }
+    let (:argv) { ['--exec', file_path] }
+
+    it 'returns :exec and file path' do
+      expect(parse_options).to eql({ op: :exec, file_path: file_path })
+    end
+  end
+
+  context 'when receiving the exec option with a file path and pass-along arguments' do
+    let (:file_path) { '/usr/bin/echo' }
+    let (:additional_args) { ["hello", "all", "my", "peeps"] }
+    let (:argv) { ['--exec', file_path, "--"].concat(additional_args) }
+
+    it 'returns :exec, file path and pass-along arguments' do
+      expect(parse_options).to eql({
+        op: :exec,
+        file_path: file_path,
+        args: additional_args
+      })
     end
   end
 end
