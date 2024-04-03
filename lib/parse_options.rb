@@ -4,8 +4,8 @@ require 'getoptlong'
 USAGE = <<~EOF
   usage:
     edr_tester [--help | -h]
-    edr_tester [[--exec | -x] <file path>]
-    edr_tester [[--exec | -x] <file path> -- <arguments>]
+    edr_tester [--exec | -x] <file path>
+    edr_tester [--exec | -x] <file path> -- <arguments>
 
   options:
     --help, -h    Displays this usage documentation
