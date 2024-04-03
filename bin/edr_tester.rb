@@ -15,7 +15,7 @@ begin
       timestamp: time,
       progname: progname,
       **hash
-    )
+    ) + "\n"
   end
 
   case opts[:op]

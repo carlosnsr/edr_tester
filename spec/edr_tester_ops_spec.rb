@@ -13,15 +13,13 @@ describe '.exec_file' do
     Timecop.return
   end
 
-  before do
-    allow(Kernel).to receive(:spawn).with(cmd) { pid }
-  end
-
   let(:user) { 'exec_tester' }
   let(:time) { Time.now }
   let(:pid) { 8724 }
 
   context 'when given a path to an executable file' do
+    before { allow(Kernel).to receive(:spawn).with(cmd) { pid } }
+
     let(:file_path) { '/bin/echo' }
     let(:cmd) { file_path }
 
@@ -41,6 +39,8 @@ describe '.exec_file' do
   end
 
   context 'when given a path to an executable file and arguments' do
+    before { allow(Kernel).to receive(:spawn).with(cmd) { pid } }
+
     let(:file_path) { '/bin/echo' }
     let(:args) { ['hello', 'there'] }
     let(:cmd) { file_path + ' hello there'}
@@ -61,8 +61,25 @@ describe '.exec_file' do
   end
 
   context 'when file path is incorrect' do
-  end
+    let(:file_path) { './dont_exist' }
+    let(:args) { ['hello', 'there'] }
+    let(:cmd) { file_path + ' hello there'}
 
-  context 'when given a path to a non-executable file' do
+    it 'does not raise an error' do
+      expect { exec_file(file_path) }.to_not raise_error
+    end
+
+    it 'does NOT run the given file' do
+      expect(Kernel).to_not receive(:spawn).with(cmd)
+      exec_file(file_path, args)
+    end
+
+    it 'returns the user, command line and error' do
+      expect(exec_file(file_path, args)).to eq({
+        username: user,
+        process_command_line: cmd,
+        error: "File '#{file_path}' does not exist"
+      })
+    end
   end
 end
