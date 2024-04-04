@@ -22,6 +22,7 @@ begin
     ) + "\n"
   end
 
+  # TODO: change activity descriptors to uppercase, because stand out more and... convention?
   case opts[:op]
     when :none
       logger.info('Did nothing')
@@ -37,6 +38,9 @@ begin
     when :modify
       result = modify_file(opts[:file_path])
       logger.info({ activity_descriptor: "Modify File" }.merge!(result))
+    when :transmit
+      result = transmit_data(opts[:dest], opts[:port], opts[:data])
+      logger.info({ activity_descriptor: "Transmit Data" }.merge!(result))
     else
       logger.error({ error: "Unexpected Operation" }.merge(opts))
   end

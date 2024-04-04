@@ -238,3 +238,41 @@ describe '.modify_file' do
     end
   end
 end
+
+describe '.transmit_data' do
+  let(:socket) { instance_double('TCPSocket') }
+  let(:dest) { 'localhost' }
+  let(:port) { 8888 }
+  let(:data) { 'I just called/to say/I love you' }
+  let(:addr) { ["AF_INET", 56158, "localhost", "127.0.0.1"] }
+
+  context 'when connection succeeds' do
+    before do
+      allow(TCPSocket).to receive(:open).with(dest, port) { socket }
+      allow(socket).to receive(:close)
+      allow(socket).to receive(:write).with(data) { data.length }
+      allow(socket).to receive(:addr).with(true) { addr }
+    end
+
+    it 'connects to a TCP socket' do
+      expect(TCPSocket).to receive(:open)
+      transmit_data(dest, port, data)
+    end
+
+    it 'transmits data' do
+      expect(socket).to receive(:write).with(data)
+      transmit_data(dest, port, data)
+    end
+
+    it 'returns address and port for the destination and source, protocol, and amount sent' do
+      expect(transmit_data(dest, port, data)).to eql({
+        destination_address: dest,
+        destination_port: port,
+        source_address: addr[3],
+        source_port: addr[1],
+        amount_of_data_sent: data.length,
+        protocol: 'TCP',
+      })
+    end
+  end
+end

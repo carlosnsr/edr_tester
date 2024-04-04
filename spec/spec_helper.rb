@@ -35,8 +35,13 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
-  end
 
+    # This option should be set when all dependencies are being loaded
+    # before a spec run, as is the case in a typical spec helper. It will
+    # cause any verifying double instantiation for a class that does not
+    # exist to raise, protecting against incorrectly spelt names.
+    mocks.verify_doubled_constant_names = true
+  end
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards
   # compatibility in RSpec 3). It causes shared context metadata to be
