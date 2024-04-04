@@ -208,4 +208,62 @@ describe '.parse_options' do
       end
     end
   end
+
+  describe '--transmit option' do
+    let(:dest) { 'localhost' }
+    let(:port) { 2000 }
+    let(:data) { 'I just called/to say/I love you' }
+
+    context 'without a dest' do
+      let (:argv) { ['--transmit', '--port', port, '--data', data] }
+
+      it 'displays the error message and the usage text' do
+        message = "option `#{argv[0]}' requires a destination"
+        expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
+      end
+
+      it 'returns :none' do
+        suppress_stdout { expect(parse_options).to eql(op: :none) }
+      end
+    end
+
+    context 'without a dest' do
+      let (:argv) { ['--transmit', '--dest', dest, '--data', data] }
+
+      it 'displays the error message and the usage text' do
+        message = "option `#{argv[0]}' requires a port"
+        expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
+      end
+
+      it 'returns :none' do
+        suppress_stdout { expect(parse_options).to eql(op: :none) }
+      end
+    end
+
+    context 'without data' do
+      let (:argv) { ['--transmit', '--dest', dest, '--port', port] }
+
+      it 'displays the error message and the usage text' do
+        message = "option `#{argv[0]}' requires data to transmit"
+        expect { parse_options }.to output("#{message}\n#{USAGE}").to_stdout
+      end
+
+      it 'returns :none' do
+        suppress_stdout { expect(parse_options).to eql(op: :none) }
+      end
+    end
+
+    context 'with a dest, port, and data' do
+      let (:argv) { ['--transmit', '--dest', dest, '--port', port, '--data', data] }
+
+      it 'returns :transmit, dest, port, and data ' do
+        expect(parse_options).to eql(
+          op: :transmit,
+          dest: dest,
+          port: port,
+          data: data
+        )
+      end
+    end
+  end
 end

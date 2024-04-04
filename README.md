@@ -75,6 +75,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - [ ] run on windows/linux (developed and runs on mac)
 - [ ] log entire process command line
 - [ ] handle multiple operations on command line
+- [ ] one page description
 - [x] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [x] path exists?
@@ -116,7 +117,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] network connection and transmit
-    - [ ] cmd line params: url, maybe data
+    - [x] cmd line params: dest, port, data
     - [ ] connects?
     - [ ] response?
     - [ ] log it
