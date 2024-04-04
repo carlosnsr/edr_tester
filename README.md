@@ -95,6 +95,8 @@ edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
 - [x] log entire process command line
 - [ ] handle multiple operations on command line
 - [ ] one page description
+- [ ] remove todos from README
+- [ ] refactor
 - [x] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [x] path exists?
