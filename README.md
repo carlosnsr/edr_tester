@@ -44,7 +44,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [x] create file at location
         - [x] text file
         - [x] bin file
-    - [ ] path exists?
+    - [x] path exists?
     - [x] populate with random/preset stuff
     - [x] log it
     - [ ] [QUESTION] the file-ops logging also requires the process command line, so now I'm thinking that what I logged for the "start a process" step is wrong

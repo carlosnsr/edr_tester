@@ -29,6 +29,11 @@ CONTENT = 'Lorem ipsum dolor sit amet'
 # Creates a file of the specified type at the specified location
 # TODO: Returns the start_time, user, command executed, and process ID
 def create_file(file_path, file_type = :text)
+  dirname = File.dirname(file_path)
+  if !Dir.exist?(dirname)
+    return { error: "Path '#{dirname}' does not exist" }
+  end
+
   flag = file_type == :binary ? 'wb' : 'w'
   case file_type
     when :text

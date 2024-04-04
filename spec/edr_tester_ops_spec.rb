@@ -85,14 +85,10 @@ end
 describe '.create_file' do
   ROOT = './spec/tmp'
 
-  around do |example|
-    FileUtils.mkdir(ROOT, mode: 0700)
-    example.run
-  ensure
-    FileUtils.rm_rf(ROOT)
-  end
+  before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
+  after(:all) { FileUtils.rm_rf(ROOT) }
 
-  after { FileUtils.rm(file_path) }
+  after { FileUtils.rm(file_path) if File.exist?(file_path) }
 
   context 'given a file path and a file type of text' do
     let(:file_path) { "#{ROOT}/text_file" }
@@ -121,6 +117,26 @@ describe '.create_file' do
 
     it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
       expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'when file path is to a location that does not exist' do
+    let(:file_path) { './doesnt/exist.txt' }
+    let(:file_type) { :text }
+
+    it 'does not raise an error' do
+      expect { create_file(file_path, file_type) }.to_not raise_error
+    end
+
+    it 'does NOT create the given file' do
+      expect { create_file(file_path, file_type) }
+        .to_not change { Dir.children(ROOT).count }
+    end
+
+    it 'returns the user, command line and error' do
+      expect(create_file(file_path, file_type)).to eq({
+        error: "Path '#{File.dirname(file_path)}' does not exist"
+      })
     end
   end
 end
