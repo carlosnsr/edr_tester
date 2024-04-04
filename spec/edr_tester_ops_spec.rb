@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'timecop'
 require 'fileutils'
+
 require 'edr_tester_ops'
 
 describe '.exec_file' do
@@ -26,11 +27,11 @@ describe '.exec_file' do
 
     it 'runs the given file' do
       expect(Kernel).to receive(:spawn).with(cmd)
-      exec_file(file_path)
+      exec_file(file_path, nil)
     end
 
     it 'returns the start time, cmd, and pid' do
-      expect(exec_file(file_path)).to eq({
+      expect(exec_file(file_path, nil)).to eq({
         start_time: time,
         process_command_line: cmd,
         spawned_process_id: pid
@@ -65,7 +66,7 @@ describe '.exec_file' do
     let(:cmd) { file_path + ' hello there'}
 
     it 'does not raise an error' do
-      expect { exec_file(file_path) }.to_not raise_error
+      expect { exec_file(file_path, nil) }.to_not raise_error
     end
 
     it 'does NOT run the given file' do

@@ -9,6 +9,16 @@ describe '.parse_options' do
     yield
   end
 
+  context 'when given a file path with Windows separators' do
+    let(:windows_file_path) { '\bin\echo' }
+    let(:file_path) { '/bin/echo' }
+    let (:argv) { ['--file', windows_file_path] }
+
+    it 'returns a mac-formatted file_path' do
+      expect(parse_options).to eql({ file_path: file_path })
+    end
+  end
+
   context 'when receiving the help option' do
     let (:argv) { ['--help'] }
 

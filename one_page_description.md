@@ -11,11 +11,14 @@ One can then check the log file of the EDR Tester and the corresponding EDR agen
 
 ## Usage
 
+The README covers installation on Mac and on Windows.
+The below instructions assume you're on Mac.
+
 To start off, execute `./edr_tester --help`.
 If this doesn't work, then use `ruby ./bin/edr_tester.rb --help` instead.
 
 This will print a usage statement with all the possible commands supported by `edr_tester`.
-There is also a provided README.md.
+There is also the provided README.md.
 
 Run `edr_tester` with the required command line parameters to perform an action.
 The program will perform a single action per invocation.
@@ -24,8 +27,13 @@ Results will be logged to `edr_tester.log` in JSON.
 ## Platforms
 
 This program has been tested on Mac.
-I am about to test it on Windows.
+All tests pass on Mac.
+
+This program has been tested on Windows running in the environment created by [Ruby Installer for Windows](https://rubyinstaller.org/), but on Windows one must use `./edr_tester.bat` instead of `./edr_tester`.
+All but 5 tests pass on Windows
+
 It has not been tested on Linux.
+I feel that it run well under Linux using the Mac instructions.
 
 ## Next steps
 

@@ -32,7 +32,7 @@ USAGE = <<~EOF
     --port          Specifies the port to connect to
 
   example:
-    ./edr_tester --exec -f /bin/echo -- hello world
+    edr_tester --exec -f /bin/echo -- hello world
 EOF
 
 # destructively parses ARGV and returns a hash with the parameters for the given operation
@@ -77,7 +77,8 @@ def parse_options
         result[:op] = :transmit
       # modifiers
       when '--file'
-        result[:file_path] = arg
+        os_file_path = File.join(arg.split(%r#[/\\]#))
+        result[:file_path] = os_file_path
       when '--bin'
         result[:file_type] = :binary
       when '--text'
