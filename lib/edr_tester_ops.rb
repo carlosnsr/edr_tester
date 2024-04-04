@@ -59,6 +59,8 @@ end
 # Given a file_path, deletes the file at the specified location
 # Returns the file_path
 def delete_file(file_path)
+  return { error: "File '#{file_path}' does not exist" } if !File.exist?(file_path)
+
   File.delete(file_path)
   { file_path: file_path }
 end

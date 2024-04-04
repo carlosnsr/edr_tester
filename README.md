@@ -78,10 +78,10 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - [ ] delete a file
     - [x] cmd line params: file path
     - [x] find file at location
-    - [ ] exists?
+    - [x] exists?
     - [x] delete it
     - [ ] success?
-    - [ ] log it
+    - [x] log it
     - [ ] test logging
     - [ ] update readme
 - [ ] network connection and transmit

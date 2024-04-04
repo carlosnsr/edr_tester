@@ -82,9 +82,9 @@ describe '.exec_file' do
   end
 end
 
-describe '.create_file' do
-  ROOT = './spec/tmp'
+ROOT = './spec/tmp'
 
+describe '.create_file' do
   before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
   after(:all) { FileUtils.rm_rf(ROOT) }
 
@@ -142,15 +142,14 @@ describe '.create_file' do
 end
 
 describe '.delete_file' do
-  ROOT = './spec/tmp'
-
   before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
   after(:all) { FileUtils.rm_rf(ROOT) }
 
-  before { FileUtils.touch(file_path) }
   after { FileUtils.rm(file_path) if File.exist?(file_path) }
 
-  context 'given a file path' do
+  context 'given a file path and the file exists' do
+    before { FileUtils.touch(file_path) }
+
     let(:file_path) { "#{ROOT}/doomed_file" }
 
     it 'deletes a file at the specified location' do
@@ -160,6 +159,25 @@ describe '.delete_file' do
 
     it 'returns the file_path' do
       expect(delete_file(file_path)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'when file path is to a location that does not exist' do
+    let(:file_path) { './path/doesnt/exist/file.txt' }
+
+    it 'does not raise an error' do
+      expect { delete_file(file_path) }.to_not raise_error
+    end
+
+    it 'does NOT delete the given file' do
+      expect { delete_file(file_path) }
+        .to_not change { Dir.children(ROOT).count }
+    end
+
+    it 'returns the error' do
+      expect(delete_file(file_path)).to eq({
+        error: "File '#{file_path}' does not exist"
+      })
     end
   end
 end
