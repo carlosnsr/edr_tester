@@ -12,6 +12,7 @@ GEM
     pry-byebug (3.10.1)
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
+    ptools (1.5.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -35,6 +36,7 @@ DEPENDENCIES
   getoptlong (~> 0.2.1)
   pry (~> 0.14.2)
   pry-byebug (~> 3.10)
+  ptools (~> 1.5)
   rspec (~> 3.13)
   timecop (~> 0.9.8)
 
