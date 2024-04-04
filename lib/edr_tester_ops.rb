@@ -102,4 +102,12 @@ def transmit_data(dest, port, data)
     amount_of_data_sent: sent,
     protocol: 'TCP',
   }
+
+rescue Errno::ECONNREFUSED => error
+  {
+    destination_address: dest,
+    destination_port: port,
+    protocol: 'TCP',
+    error: error.message
+  }
 end

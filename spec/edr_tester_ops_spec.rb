@@ -264,7 +264,7 @@ describe '.transmit_data' do
       transmit_data(dest, port, data)
     end
 
-    it 'returns address and port for the destination and source, protocol, and amount sent' do
+    it 'returns protocol, amount sent, and address and port for the destination and source' do
       expect(transmit_data(dest, port, data)).to eql({
         destination_address: dest,
         destination_port: port,
@@ -272,6 +272,25 @@ describe '.transmit_data' do
         source_port: addr[1],
         amount_of_data_sent: data.length,
         protocol: 'TCP',
+      })
+    end
+  end
+
+  context 'when connection is refused' do
+    before do
+      allow(TCPSocket).to receive(:open).with(dest, port).and_raise(Errno::ECONNREFUSED)
+    end
+
+    it 'does not raise an error' do
+      expect { transmit_data(dest, port, data) }.to_not raise_error
+    end
+
+    it 'returns protocol, amount sent, and address and port for the destination and source' do
+      expect(transmit_data(dest, port, data)).to eql({
+        destination_address: dest,
+        destination_port: port,
+        protocol: 'TCP',
+        error: 'Connection refused'
       })
     end
   end
