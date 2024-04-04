@@ -77,9 +77,9 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] update readme
 - [ ] delete a file
     - [x] cmd line params: file path
-    - [ ] find file at location
+    - [x] find file at location
     - [ ] exists?
-    - [ ] delete it
+    - [x] delete it
     - [ ] success?
     - [ ] log it
     - [ ] test logging

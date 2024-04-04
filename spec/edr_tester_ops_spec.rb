@@ -100,7 +100,7 @@ describe '.create_file' do
       expect(File.readlines(file_path)).to eq([CONTENT])
     end
 
-    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+    it 'returns the file_path' do
       expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
     end
   end
@@ -115,13 +115,13 @@ describe '.create_file' do
       expect(File.readlines(file_path)).to eq([encode(CONTENT)])
     end
 
-    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+    it 'returns the file_path' do
       expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
     end
   end
 
   context 'when file path is to a location that does not exist' do
-    let(:file_path) { './doesnt/exist.txt' }
+    let(:file_path) { './path/doesnt/exist/file.txt' }
     let(:file_type) { :text }
 
     it 'does not raise an error' do
@@ -133,10 +133,33 @@ describe '.create_file' do
         .to_not change { Dir.children(ROOT).count }
     end
 
-    it 'returns the user, command line and error' do
+    it 'returns the error' do
       expect(create_file(file_path, file_type)).to eq({
         error: "Path '#{File.dirname(file_path)}' does not exist"
       })
+    end
+  end
+end
+
+describe '.delete_file' do
+  ROOT = './spec/tmp'
+
+  before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
+  after(:all) { FileUtils.rm_rf(ROOT) }
+
+  before { FileUtils.touch(file_path) }
+  after { FileUtils.rm(file_path) if File.exist?(file_path) }
+
+  context 'given a file path' do
+    let(:file_path) { "#{ROOT}/doomed_file" }
+
+    it 'deletes a file at the specified location' do
+      expect { delete_file(file_path) }
+        .to change { Dir.children(ROOT).count }.by(-1)
+    end
+
+    it 'returns the file_path' do
+      expect(delete_file(file_path)).to eq({ file_path: file_path, })
     end
   end
 end

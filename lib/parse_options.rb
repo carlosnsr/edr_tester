@@ -71,6 +71,7 @@ def parse_options
   end
 
   result
+
 rescue GetoptLong::Error => error
   puts error.message
   puts USAGE
