@@ -114,7 +114,7 @@ edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
 - [ ] run on windows/linux
 - [x] log entire process command line
 - [ ] handle multiple operations on command line
-- [ ] one page description
+- [x] one page description
 - [ ] remove todos from README
 - [ ] refactor
 - [x] start a process

@@ -26,3 +26,20 @@ Results will be logged to `edr_tester.log` in JSON.
 This program has been tested on Mac.
 I am about to test it on Windows.
 It has not been tested on Linux.
+
+## Next steps
+
+Looking at it now, there are still some things that I would like to do.
+Some of these are listed in the To-Do list at the bottom of the README.
+
+There are some refactorings that I would like to do.
+Like how better to structure the code in `./lib/parse_options.rb` and `./lib/edr_tester_ops.rb`.
+When I started developing, I just dug in with some considerations towards design and error-handling.
+
+Now that a lot of it is done, I would:
+- take a look at these files, and see whether moving the code into classes would help with readability and extensibility
+- add testing for the various logs that are being generated
+    - most likely move the logging into a dedicated object to abstract away the logger's setup, andto clean up the code in `./bin/edr_tester.rb`
+- propagate some errors to the logs
+- additional error-handling
+- resolving the items still undone in the TODO section
