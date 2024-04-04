@@ -11,9 +11,19 @@ One can then check the log file of the EDR Tester and the corresponding EDR agen
 
 ## Installation
 
-Requires `ruby 3.2.2`.
-To install, run `bundle install`.
-To execute, run `./edr_tester`.
+### Mac
+
+- Requires `ruby 3.2.3`.
+- To install, run `bundle install`.
+- To execute, run `./edr_tester`.
+
+### Windows
+
+- Requires [ruby 3.2.3](https://rubyinstaller.org/downloads)
+- Open "Start Command Prompt with Ruby"
+- Clone this repo and `cd` into the directory
+- To install, run `bundle install`.
+- To execute, run `.\edr_tester.bat`.
 
 ## Testing
 

@@ -32,7 +32,7 @@ USAGE = <<~EOF
     --port          Specifies the port to connect to
 
   example:
-    ./edr_tester --exec -f /bin/echo -- hello world
+    edr_tester --exec -f /bin/echo -- hello world
 EOF
 
 # destructively parses ARGV and returns a hash with the parameters for the given operation
