@@ -6,8 +6,8 @@ require 'socket'
 # Returns the start_time, user, command executed, and process ID
 # NOTE: Danger of command injection
 #       Should not be called with unknown or unsanitised commands
-def exec_file(file_path, args = [])
-  cmd = "#{file_path}" + (args.empty? ? "" : " #{args.join(' ')}")
+def exec_file(file_path, args)
+  cmd = "#{file_path}" + (args && !args.empty? ? " #{args.join(' ')}" : "")
 
   if !File.exist?(file_path)
     return {
