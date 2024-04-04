@@ -92,7 +92,7 @@ edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
 - [x] handle command line arguments
 - [x] run on mac
 - [ ] run on windows/linux
-- [ ] log entire process command line
+- [x] log entire process command line
 - [ ] handle multiple operations on command line
 - [ ] one page description
 - [x] start a process

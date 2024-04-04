@@ -27,9 +27,9 @@ USAGE = <<~EOF
     --file, -f      The file path to use
     --bin           Used for creating a binary file
     --text          Used for creating a text file
-    --data          Specifies the IP address to connect to when using --transmit
-    --dest          Specifies the data to transmit when using --transmit
-    --port          Specifies the port to connect to when using --transmit
+    --data          Specifies the IP address to connect to when
+    --dest          Specifies the data to transmit
+    --port          Specifies the port to connect to
 EOF
 
 # destructively parses ARGV and returns a hash with the parameters for the given operation

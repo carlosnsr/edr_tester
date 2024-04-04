@@ -6,9 +6,10 @@ require 'logger'
 require 'json'
 
 begin
+  cmd_line = [$PROGRAM_NAME].concat(ARGV).join(' ').freeze
   opts = parse_options
 
-  user = ENV['USER'] || ENV['USERNAME']
+  user = (ENV['USER'] || ENV['USERNAME']).freeze
   # set up the logger to output JSON
   logger = Logger.new('edr_tester.log', progname: $PROGRAM_NAME)
   logger.formatter = proc do |severity, time, progname, hash|
@@ -16,6 +17,7 @@ begin
       severity: severity,
       timestamp: time,
       username: user,
+      process_command_line: cmd_line,
       process_name: progname,
       process_id: Process.pid,
       **hash
@@ -24,7 +26,7 @@ begin
 
   case opts[:op]
     when :none
-      logger.info('Did nothing')
+      logger.info({ activity_descriptor: 'NONE' }.merge!(opts))
     when :exec
       result = exec_file(opts[:file_path], opts[:args])
       logger.info({ activity_descriptor: "PROCESS_START" }.merge!(result))
