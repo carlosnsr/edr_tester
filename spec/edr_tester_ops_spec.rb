@@ -104,4 +104,15 @@ describe '.create_file' do
       expect(File.readlines(file_path)).to eq([CONTENT])
     end
   end
+
+  context 'given a file path and a file type of binary' do
+    let(:file_path) { "#{ROOT}/binary_file" }
+    let(:file_type) { :binary }
+
+    it 'creates a file at the specified location with default binary data' do
+      expect { create_file(file_path, file_type) }
+        .to change { Dir.children(ROOT).count }.by(1)
+      expect(File.readlines(file_path)).to eq([encode(CONTENT)])
+    end
+  end
 end

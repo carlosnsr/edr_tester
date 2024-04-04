@@ -43,9 +43,9 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] [QUESTION] what types? bin, text, what?
     - [ ] create file at location
         - [x] text file
-        - [ ] bin file
+        - [x] bin file
     - [ ] path exists?
-    - [ ] populate with random/preset stuff
+    - [x] populate with random/preset stuff
     - [ ] log it
     - [ ] test logging
     - [ ] update readme

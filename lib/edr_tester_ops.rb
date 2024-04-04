@@ -31,8 +31,23 @@ CONTENT = 'Lorem ipsum dolor sit amet'
 # Given a file_path and file type (supported: :binary, :text)
 # Creates a file of the specified type at the specified location
 # TODO: Returns the start_time, user, command executed, and process ID
-def create_file(file_path, file_type)
-  File.open(file_path, 'w') do |f|
-    f.write(TEXT_CONTENT)
+def create_file(file_path, file_type = :text)
+  flag = file_type == :binary ? 'wb' : 'w'
+  case file_type
+    when :text
+      File.open(file_path, 'w') do |f|
+        f.write(CONTENT)
+      end
+    when :binary
+      File.open(file_path, 'wb') do |f|
+        f.write(encode(CONTENT))
+      end
+    else
+      raise RuntimeError, "unknown file type #{file_type}"
   end
+end
+
+# Returns a binary representation of the given string
+def encode(string)
+  Marshal.dump(string)
 end
