@@ -210,7 +210,7 @@ describe '.modify_file' do
 
     it 'modifies the file adding an extra line of default text' do
       modify_file(file_path)
-      expected = "\u0004\bI\"!Lorem ipsum dolor sit amet\\n\u0006:\u0006ETLorem ipsum dolor sit amet\\n"
+      expected = "\u0004\bI\"\u001FLorem ipsum dolor sit amet\u0006:\u0006ETLorem ipsum dolor sit amet"
       expect(File.readlines(file_path)).to eq([expected])
     end
 
@@ -234,6 +234,63 @@ describe '.modify_file' do
     it 'returns the error' do
       expect(modify_file(file_path)).to eq({
         error: "File '#{file_path}' does not exist"
+      })
+    end
+  end
+end
+
+describe '.transmit_data' do
+  let(:socket) { instance_double('TCPSocket') }
+  let(:dest) { 'localhost' }
+  let(:port) { 8888 }
+  let(:data) { 'I just called/to say/I love you' }
+  let(:addr) { ["AF_INET", 56158, "localhost", "127.0.0.1"] }
+
+  context 'when connection succeeds' do
+    before do
+      allow(TCPSocket).to receive(:open).with(dest, port) { socket }
+      allow(socket).to receive(:close)
+      allow(socket).to receive(:write).with(data) { data.length }
+      allow(socket).to receive(:addr).with(true) { addr }
+    end
+
+    it 'connects to a TCP socket' do
+      expect(TCPSocket).to receive(:open)
+      transmit_data(dest, port, data)
+    end
+
+    it 'transmits data' do
+      expect(socket).to receive(:write).with(data)
+      transmit_data(dest, port, data)
+    end
+
+    it 'returns protocol, amount sent, and address and port for the destination and source' do
+      expect(transmit_data(dest, port, data)).to eql({
+        destination_address: dest,
+        destination_port: port,
+        source_address: addr[3],
+        source_port: addr[1],
+        amount_of_data_sent: data.length,
+        protocol: 'TCP',
+      })
+    end
+  end
+
+  context 'when connection is refused' do
+    before do
+      allow(TCPSocket).to receive(:open).with(dest, port).and_raise(Errno::ECONNREFUSED)
+    end
+
+    it 'does not raise an error' do
+      expect { transmit_data(dest, port, data) }.to_not raise_error
+    end
+
+    it 'returns protocol, amount sent, and address and port for the destination and source' do
+      expect(transmit_data(dest, port, data)).to eql({
+        destination_address: dest,
+        destination_port: port,
+        protocol: 'TCP',
+        error: 'Connection refused'
       })
     end
   end

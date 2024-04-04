@@ -1,4 +1,5 @@
 require 'ptools'
+require 'socket'
 
 # Given a file_path and optional arguments
 # Spawns a process executingc that file with the given arguments
@@ -25,7 +26,7 @@ def exec_file(file_path, args = [])
   }
 end
 
-CONTENT = 'Lorem ipsum dolor sit amet\n'
+CONTENT = 'Lorem ipsum dolor sit amet'
 
 # Given a file_path and file type (supported: :binary, :text)
 # Creates a file of the specified type at the specified location
@@ -81,4 +82,32 @@ def modify_file(file_path)
   end
 
   { file_path: file_path }
+end
+
+def transmit_data(dest, port, data)
+  socket = nil
+  begin
+    socket = TCPSocket.open(dest, port)
+    sent = socket.write(data)
+    source = socket.addr(true)
+  ensure
+    socket.close if socket
+  end
+
+  {
+    destination_address: dest,
+    destination_port: port,
+    source_address: source[3],
+    source_port: source[1],
+    amount_of_data_sent: sent,
+    protocol: 'TCP',
+  }
+
+rescue Errno::ECONNREFUSED => error
+  {
+    destination_address: dest,
+    destination_port: port,
+    protocol: 'TCP',
+    error: error.message
+  }
 end

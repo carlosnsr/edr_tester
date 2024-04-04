@@ -68,13 +68,33 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - activity descriptor (i.e. 'Delete File')
     - file path
 
+### Transmitting Data
+
+`edr_tester [--transmit | -t] [--dest] <address> [--port] <port> [--data] <data>`
+
+- connects to the given address and port using TCP and transmits data across it
+- the following details will be logged:
+    - timestamp
+    - username
+    - process name
+    - process command line
+    - process ID
+    - destination address
+    - destination port
+    - source address
+    - source port
+    - amount of data sent
+    - protocol
+
 ## TODO
 
 - [x] bin/shell script
 - [x] handle command line arguments
-- [ ] run on windows/linux (developed and runs on mac)
+- [x] run on mac
+- [ ] run on windows/linux
 - [ ] log entire process command line
 - [ ] handle multiple operations on command line
+- [ ] one page description
 - [x] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [x] path exists?
@@ -116,9 +136,9 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] network connection and transmit
-    - [ ] cmd line params: url, maybe data
-    - [ ] connects?
+    - [x] cmd line params: dest, port, data
+    - [x] connects?
     - [ ] response?
-    - [ ] log it
+    - [x] log it
     - [ ] test logging
-    - [ ] update readme
+    - [x] update readme
