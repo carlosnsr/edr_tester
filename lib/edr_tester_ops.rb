@@ -27,7 +27,7 @@ CONTENT = 'Lorem ipsum dolor sit amet'
 
 # Given a file_path and file type (supported: :binary, :text)
 # Creates a file of the specified type at the specified location
-# TODO: Returns the start_time, user, command executed, and process ID
+# Returns the file_path
 def create_file(file_path, file_type = :text)
   dirname = File.dirname(file_path)
   if !Dir.exist?(dirname)
@@ -54,4 +54,13 @@ end
 # Returns a binary representation of the given string
 def encode(string)
   Marshal.dump(string)
+end
+
+# Given a file_path, deletes the file at the specified location
+# Returns the file_path
+def delete_file(file_path)
+  return { error: "File '#{file_path}' does not exist" } if !File.exist?(file_path)
+
+  File.delete(file_path)
+  { file_path: file_path }
 end
