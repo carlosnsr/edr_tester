@@ -210,7 +210,7 @@ describe '.modify_file' do
 
     it 'modifies the file adding an extra line of default text' do
       modify_file(file_path)
-      expected = "\u0004\bI\"!Lorem ipsum dolor sit amet\\n\u0006:\u0006ETLorem ipsum dolor sit amet\\n"
+      expected = "\u0004\bI\"\u001FLorem ipsum dolor sit amet\u0006:\u0006ETLorem ipsum dolor sit amet"
       expect(File.readlines(file_path)).to eq([expected])
     end
 

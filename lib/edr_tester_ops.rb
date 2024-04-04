@@ -25,7 +25,7 @@ def exec_file(file_path, args = [])
   }
 end
 
-CONTENT = 'Lorem ipsum dolor sit amet\n'
+CONTENT = 'Lorem ipsum dolor sit amet'
 
 # Given a file_path and file type (supported: :binary, :text)
 # Creates a file of the specified type at the specified location
