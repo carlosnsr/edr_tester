@@ -2,11 +2,31 @@
 
 ## Concept
 
-EDR Tester is used to test an Endpoint Detection and Response (EDR) agent.  An ADL agent listens for activity in an environment.
+EDR Tester is used to test an Endpoint Detection and Response (EDR) agent.
+An EDR agent listens for activity in an environment.
 
-This EDR Tester generates activity by being called with the appropriate command line arguments.  One can then check the log file of the EDR Tester and see whether that activity was picked up by the EDR
+This EDR Tester generates activity by being called with the appropriate command line arguments.
+Each time the EDR Tester is called, it will perform one activity and log it.
+One can then check the log file of the EDR Tester and the corresponding EDR agent's logs, and see whether that activity was picked up by the EDR agent.
+
+## Installation
+
+Requires `ruby 3.2.2`.
+To install, run `bundle install`.
+To execute, run `./edr_tester`.
+
+## Testing
+
+To run the provided tests, execute `rspec`
 
 ## Usage
+
+Use the provided commands to execute one action at a time.
+Results will be logged to `edr_tester.log` in JSON.
+
+### Help
+
+`edr_tester --help` provides a usage statement for the activities supported by the program.
 
 ### Executing an executable file
 
