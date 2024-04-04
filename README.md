@@ -53,6 +53,21 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - activity descriptor (i.e. 'Delete File')
     - file path
 
+### Modifying a file
+
+`edr_tester [--modify | -m] <file path>`
+
+- modify the file at the given location
+- detects if the file is binary or text and appends some cruft
+- the following details will be logged:
+    - timestamp
+    - username
+    - process name
+    - process command line
+    - process ID
+    - activity descriptor (i.e. 'Delete File')
+    - file path
+
 ## TODO
 
 - [x] bin/shell script
@@ -82,14 +97,15 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] modify a file
-    - [ ] cmd line params: file path, file type
-    - [ ] find file at location
-    - [ ] exists?
-    - [ ] bin? add some crap to the end
-    - [ ] text? add some crap to the end
-    - [ ] log it
+    - [x] cmd line params: file path, file type
+    - [x] find file at location
+    - [x] exists?
+    - [ ] write-able?
+    - [x] bin? add some crap to the end
+    - [x] text? add some crap to the end
+    - [x] log it
     - [ ] test logging
-    - [ ] update readme
+    - [x] update readme
 - [x] delete a file
     - [x] cmd line params: file path
     - [x] find file at location

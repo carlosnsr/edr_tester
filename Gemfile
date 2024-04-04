@@ -13,3 +13,5 @@ gem "timecop", "~> 0.9.8"
 gem "pry", "~> 0.14.2"
 
 gem "pry-byebug", "~> 3.10"
+
+gem "ptools", "~> 1.5"

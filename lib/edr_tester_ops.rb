@@ -1,3 +1,5 @@
+require 'ptools'
+
 # Given a file_path and optional arguments
 # Spawns a process executingc that file with the given arguments
 # Returns the start_time, user, command executed, and process ID
@@ -23,16 +25,14 @@ def exec_file(file_path, args = [])
   }
 end
 
-CONTENT = 'Lorem ipsum dolor sit amet'
+CONTENT = 'Lorem ipsum dolor sit amet\n'
 
 # Given a file_path and file type (supported: :binary, :text)
 # Creates a file of the specified type at the specified location
 # Returns the file_path
 def create_file(file_path, file_type = :text)
   dirname = File.dirname(file_path)
-  if !Dir.exist?(dirname)
-    return { error: "Path '#{dirname}' does not exist" }
-  end
+  return { error: "Path '#{dirname}' does not exist" } if !Dir.exist?(dirname)
 
   flag = file_type == :binary ? 'wb' : 'w'
   case file_type
@@ -62,5 +62,23 @@ def delete_file(file_path)
   return { error: "File '#{file_path}' does not exist" } if !File.exist?(file_path)
 
   File.delete(file_path)
+  { file_path: file_path }
+end
+
+# Given a file_path, modifies the file with a line of 'content' on the end
+# Returns the file_path
+def modify_file(file_path)
+  return { error: "File '#{file_path}' does not exist" } if !File.exist?(file_path)
+
+  if File.binary?(file_path)
+    File.open(file_path, 'ab') do |f|
+      f.write(encode(CONTENT))
+    end
+  else
+    File.open(file_path, 'a') do |f|
+      f.write(CONTENT)
+    end
+  end
+
   { file_path: file_path }
 end
