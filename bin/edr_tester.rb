@@ -34,6 +34,9 @@ begin
     when :delete
       result = delete_file(opts[:file_path])
       logger.info({ activity_descriptor: "Delete File" }.merge!(result))
+    when :modify
+      result = modify_file(opts[:file_path])
+      logger.info({ activity_descriptor: "Modify File" }.merge!(result))
     else
       logger.error({ error: "Unexpected Operation" }.merge(opts))
   end

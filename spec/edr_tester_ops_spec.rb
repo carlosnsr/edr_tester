@@ -181,3 +181,60 @@ describe '.delete_file' do
     end
   end
 end
+
+describe '.modify_file' do
+  before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
+  after(:all) { FileUtils.rm_rf(ROOT) }
+
+  after { FileUtils.rm(file_path) if File.exist?(file_path) }
+
+  context 'given a file path and a text file exists at that location' do
+    before { create_file(file_path, :text) }
+
+    let(:file_path) { "#{ROOT}/text_file" }
+
+    it 'modifies the file adding an extra line of default text' do
+      modify_file(file_path)
+      expect(File.readlines(file_path)).to eq([CONTENT + CONTENT])
+    end
+
+    it 'returns the file_path' do
+      expect(modify_file(file_path)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'given a file path and a binary file exists at that location' do
+    before { create_file(file_path, :binary) }
+
+    let(:file_path) { "#{ROOT}/binary_file" }
+
+    it 'modifies the file adding an extra line of default text' do
+      modify_file(file_path)
+      expected = "\u0004\bI\"!Lorem ipsum dolor sit amet\\n\u0006:\u0006ETLorem ipsum dolor sit amet\\n"
+      expect(File.readlines(file_path)).to eq([expected])
+    end
+
+    it 'returns the file_path' do
+      expect(modify_file(file_path)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'when file path is to a location that does not exist' do
+    let(:file_path) { './path/doesnt/exist/file.txt' }
+
+    it 'does not raise an error' do
+      expect { modify_file(file_path) }.to_not raise_error
+    end
+
+    it 'does NOT modify the given file' do
+      expect { modify_file(file_path) }
+        .to_not change { Dir.children(ROOT).count }
+    end
+
+    it 'returns the error' do
+      expect(modify_file(file_path)).to eq({
+        error: "File '#{file_path}' does not exist"
+      })
+    end
+  end
+end

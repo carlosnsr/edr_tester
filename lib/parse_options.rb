@@ -18,7 +18,7 @@ USAGE = <<~EOF
     --create, -c  Creates a file of the specified type (defaults to text)
     --delete, -d  Deletes the specified file
     --modify, -m  Modifies the specified file.
-                  Auto-detects if binary or text and appends some cruft
+                  Detects if binary or text and appends some cruft
 
   options:
     --bin         Used for creating a binary file
