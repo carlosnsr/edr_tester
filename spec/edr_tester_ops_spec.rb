@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'timecop'
+require 'fileutils'
 require 'edr_tester_ops'
 
 describe '.exec_file' do
@@ -28,12 +29,11 @@ describe '.exec_file' do
       exec_file(file_path)
     end
 
-    it 'returns the start time, user, cmd, and pid' do
+    it 'returns the start time, cmd, and pid' do
       expect(exec_file(file_path)).to eq({
         start_time: time,
-        username: user,
         process_command_line: cmd,
-        process_id: pid
+        spawned_process_id: pid
       })
     end
   end
@@ -50,12 +50,11 @@ describe '.exec_file' do
       exec_file(file_path, args)
     end
 
-    it 'returns the start time, user, cmd, and pid' do
+    it 'returns the start time, cmd, and pid' do
       expect(exec_file(file_path, args)).to eq({
         start_time: time,
-        username: user,
         process_command_line: cmd,
-        process_id: pid
+        spawned_process_id: pid
       })
     end
   end
@@ -74,11 +73,69 @@ describe '.exec_file' do
       exec_file(file_path, args)
     end
 
-    it 'returns the user, command line and error' do
+    it 'returns the command line and error' do
       expect(exec_file(file_path, args)).to eq({
-        username: user,
         process_command_line: cmd,
         error: "File '#{file_path}' does not exist"
+      })
+    end
+  end
+end
+
+describe '.create_file' do
+  ROOT = './spec/tmp'
+
+  before(:all) { FileUtils.mkdir(ROOT, mode: 0700) }
+  after(:all) { FileUtils.rm_rf(ROOT) }
+
+  after { FileUtils.rm(file_path) if File.exist?(file_path) }
+
+  context 'given a file path and a file type of text' do
+    let(:file_path) { "#{ROOT}/text_file" }
+    let(:file_type) { :text }
+
+    it 'creates a file at the specified location with the default text' do
+      expect { create_file(file_path, file_type) }
+        .to change { Dir.children(ROOT).count }.by(1)
+      expect(File.readlines(file_path)).to eq([CONTENT])
+    end
+
+    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+      expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'given a file path and a file type of binary' do
+    let(:file_path) { "#{ROOT}/binary_file" }
+    let(:file_type) { :binary }
+
+    it 'creates a file at the specified location with default binary data' do
+      expect { create_file(file_path, file_type) }
+        .to change { Dir.children(ROOT).count }.by(1)
+      expect(File.readlines(file_path)).to eq([encode(CONTENT)])
+    end
+
+    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+      expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
+    end
+  end
+
+  context 'when file path is to a location that does not exist' do
+    let(:file_path) { './doesnt/exist.txt' }
+    let(:file_type) { :text }
+
+    it 'does not raise an error' do
+      expect { create_file(file_path, file_type) }.to_not raise_error
+    end
+
+    it 'does NOT create the given file' do
+      expect { create_file(file_path, file_type) }
+        .to_not change { Dir.children(ROOT).count }
+    end
+
+    it 'returns the user, command line and error' do
+      expect(create_file(file_path, file_type)).to eq({
+        error: "Path '#{File.dirname(file_path)}' does not exist"
       })
     end
   end

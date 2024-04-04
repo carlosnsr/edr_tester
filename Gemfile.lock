@@ -1,8 +1,17 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (11.1.3)
+    coderay (1.1.3)
     diff-lcs (1.5.1)
     getoptlong (0.2.1)
+    method_source (1.0.0)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-byebug (3.10.1)
+      byebug (~> 11.0)
+      pry (>= 0.13, < 0.15)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -24,6 +33,8 @@ PLATFORMS
 
 DEPENDENCIES
   getoptlong (~> 0.2.1)
+  pry (~> 0.14.2)
+  pry-byebug (~> 3.10)
   rspec (~> 3.13)
   timecop (~> 0.9.8)
 

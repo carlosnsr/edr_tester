@@ -8,7 +8,7 @@ This EDR Tester generates activity by being called with the appropriate command 
 
 ## Usage
 
-### Executing an execuatable file
+### Executing an executable file
 
 `
 edr_tester [--exec | -x] <file path>
@@ -18,12 +18,26 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - the given executable file will be executed (with the given arguments, if any)
 - the output is not captured
 - the following details will be logged:
-    - timestamp of start time
-    - username that started the process
+    - timestamp
+    - username
     - process name
     - process command line
     - process ID
 - if the file does not exist, an error message will be logged instead
+
+### Creating a file
+
+`edr_tester [--create | -c] <file path> [--bin | --text]`
+
+- creates a binary/text file at the given location
+- the following details will be logged:
+    - timestamp
+    - username
+    - process name
+    - process command line
+    - process ID
+    - activity descriptor (i.e. 'Create File')
+    - file path
 
 ## TODO
 
@@ -39,14 +53,17 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] create a file
-    - [ ] cmd line params: file path, file type
+    - [x] cmd line params: file path, file type
     - [ ] [QUESTION] what types? bin, text, what?
-    - [ ] create file at location
-    - [ ] path exists?
-    - [ ] populate with random/preset stuff
-    - [ ] log it
+    - [x] create file at location
+        - [x] text file
+        - [x] bin file
+    - [x] path exists?
+    - [x] populate with random/preset stuff
+    - [x] log it
+    - [ ] [QUESTION] the file-ops logging also requires the process command line, so now I'm thinking that what I logged for the "start a process" step is wrong
     - [ ] test logging
-    - [ ] update readme
+    - [x] update readme
 - [ ] modify a file
     - [ ] cmd line params: file path, file type
     - [ ] find file at location
