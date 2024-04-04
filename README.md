@@ -44,15 +44,17 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - [x] bin/shell script
 - [x] handle command line arguments
 - [ ] run on windows/linux (developed and runs on mac)
+- [ ] log entire process command line
 - [x] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [x] path exists?
+    - [ ] is executable?
     - [x] run a process
         - [x] non-blocking
     - [x] log it
     - [ ] test logging
     - [x] update readme
-- [ ] create a file
+- [x] create a file
     - [x] cmd line params: file path, file type
     - [ ] [QUESTION] what types? bin, text, what?
     - [x] create file at location
@@ -74,7 +76,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [ ] update readme
 - [ ] delete a file
-    - [ ] cmd line params: file path
+    - [x] cmd line params: file path
     - [ ] find file at location
     - [ ] exists?
     - [ ] delete it
