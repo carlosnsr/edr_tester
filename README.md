@@ -39,12 +39,27 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - activity descriptor (i.e. 'Create File')
     - file path
 
+### Deleting a file
+
+`edr_tester [--delete | -d] <file path>`
+
+- deletes the file at the given location
+- the following details will be logged:
+    - timestamp
+    - username
+    - process name
+    - process command line
+    - process ID
+    - activity descriptor (i.e. 'Delete File')
+    - file path
+
 ## TODO
 
 - [x] bin/shell script
 - [x] handle command line arguments
 - [ ] run on windows/linux (developed and runs on mac)
 - [ ] log entire process command line
+- [ ] handle multiple operations on command line
 - [x] start a process
     - [x] cmd line params: exec file w/optional args for exec file
     - [x] path exists?
@@ -75,7 +90,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] log it
     - [ ] test logging
     - [ ] update readme
-- [ ] delete a file
+- [x] delete a file
     - [x] cmd line params: file path
     - [x] find file at location
     - [x] exists?
@@ -83,7 +98,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] success?
     - [x] log it
     - [ ] test logging
-    - [ ] update readme
+    - [x] update readme
 - [ ] network connection and transmit
     - [ ] cmd line params: url, maybe data
     - [ ] connects?
