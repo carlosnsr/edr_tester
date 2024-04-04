@@ -16,8 +16,8 @@ begin
       severity: severity,
       timestamp: time,
       username: user,
-      process_id: Process.pid,
       process_name: progname,
+      process_id: Process.pid,
       **hash
     ) + "\n"
   end
@@ -27,10 +27,10 @@ begin
       logger.info('Did nothing')
     when :exec
       result = exec_file(opts[:file_path], opts[:args])
-      logger.info({ operation: "Process Start" }.merge(result))
+      logger.info({ activity_descriptor: "Process Start" }.merge!(result))
     when :create
       result = create_file(opts[:file_path], opts[:file_type])
-      logger.info({ operation: "Create File" }.merge(result))
+      logger.info({ activity_descriptor: "Create File" }.merge!(result))
     else
       logger.error({ error: "Unexpected Operation" }.merge(opts))
   end

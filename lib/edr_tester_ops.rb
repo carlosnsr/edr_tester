@@ -42,6 +42,8 @@ def create_file(file_path, file_type = :text)
     else
       raise RuntimeError, "unknown file type #{file_type}"
   end
+
+  { file_path: file_path }
 end
 
 # Returns a binary representation of the given string

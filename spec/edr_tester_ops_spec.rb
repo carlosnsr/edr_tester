@@ -92,6 +92,8 @@ describe '.create_file' do
     FileUtils.rm_rf(ROOT)
   end
 
+  after { FileUtils.rm(file_path) }
+
   context 'given a file path and a file type of text' do
     let(:file_path) { "#{ROOT}/text_file" }
     let(:file_type) { :text }
@@ -100,6 +102,10 @@ describe '.create_file' do
       expect { create_file(file_path, file_type) }
         .to change { Dir.children(ROOT).count }.by(1)
       expect(File.readlines(file_path)).to eq([CONTENT])
+    end
+
+    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+      expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
     end
   end
 
@@ -111,6 +117,10 @@ describe '.create_file' do
       expect { create_file(file_path, file_type) }
         .to change { Dir.children(ROOT).count }.by(1)
       expect(File.readlines(file_path)).to eq([encode(CONTENT)])
+    end
+
+    it 'returns the file_path, activity_descriptor, user, processcmd, and pid' do
+      expect(create_file(file_path, file_type)).to eq({ file_path: file_path, })
     end
   end
 end
