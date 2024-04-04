@@ -1,15 +1,14 @@
 # getoptlong because I want POSIX guidelines compliant command-line options
 require 'getoptlong'
 
-# TODO: change to using -f to accept file and make --exec (etc.) standalone
 USAGE = <<~EOF
   usage:
     edr_tester [--help | -h]
-    edr_tester [--exec | -x] <file path>
-    edr_tester [--exec | -x] <file path> -- <arguments>
-    edr_tester [--create | -c] <file path> [--bin | --text]
-    edr_tester [--delete | -d] <file path>
-    edr_tester [--modify | -m] <file path>
+    edr_tester [--exec | -x] [--file, -f] <file path>
+    edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
+    edr_tester [--create | -c] [--file, -f] <file path> [--bin | --text]
+    edr_tester [--delete | -d] [--file, -f] <file path>
+    edr_tester [--modify | -m] [--file, -f] <file path>
     edr_tester [--transmit | -t] [--dest] <address> [--port] <port> [--data] <data>
 
   operations:
@@ -25,6 +24,7 @@ USAGE = <<~EOF
                     Requires --dest, --port, and --data
 
   options:
+    --file, -f      The file path to use
     --bin           Used for creating a binary file
     --text          Used for creating a text file
     --data          Specifies the IP address to connect to when using --transmit
@@ -44,12 +44,13 @@ def parse_options
   opts = GetoptLong.new(
     # main operators
     ['--help', '-h', GetoptLong::NO_ARGUMENT],
-    ['--exec', '-x', GetoptLong::REQUIRED_ARGUMENT],
-    ['--create', '-c', GetoptLong::REQUIRED_ARGUMENT],
-    ['--delete', '-d', GetoptLong::REQUIRED_ARGUMENT],
-    ['--modify', '-m', GetoptLong::REQUIRED_ARGUMENT],
+    ['--exec', '-x', GetoptLong::NO_ARGUMENT],
+    ['--create', '-c', GetoptLong::NO_ARGUMENT],
+    ['--delete', '-d', GetoptLong::NO_ARGUMENT],
+    ['--modify', '-m', GetoptLong::NO_ARGUMENT],
     ['--transmit', '-t', GetoptLong::NO_ARGUMENT],
     # modifiers
+    ['--file', '-f', GetoptLong::REQUIRED_ARGUMENT],
     ['--bin', GetoptLong::NO_ARGUMENT],
     ['--text', GetoptLong::NO_ARGUMENT],
     ['--data', GetoptLong::REQUIRED_ARGUMENT],
@@ -64,25 +65,16 @@ def parse_options
       when '--help'
         puts USAGE
         return { op: :none }
-      when '--exec'
-        result = { op: :exec, file_path: arg }
-        # collect pass-along arguments
-        if ARGV.length > 0
-          ARGV.shift # discards "--"
-          args = ARGV.shift(ARGV.length).map(&:to_str)
-          result[:args] = args
-        end
-        return result
+      when '--exec', '--delete', '--modify'
+        result[:op] = opt[2..].to_sym
       when '--create'
-        result.merge!(op: :create, file_path: arg)
+        result[:op] = :create
         result[:file_type] = :text unless result[:file_type]
-      when '--delete'
-        return { op: :delete, file_path: arg }
-      when '--modify'
-        return { op: :modify, file_path: arg }
       when '--transmit'
         result[:op] = :transmit
       # modifiers
+      when '--file'
+        result[:file_path] = arg
       when '--bin'
         result[:file_type] = :binary
       when '--text'
@@ -96,10 +88,19 @@ def parse_options
     end
   end
 
-  check = [:ok, :none]
-  case result[:op]
+  # collect pass-along arguments
+  if ARGV.length > 0
+    args = ARGV.shift(ARGV.length).map(&:to_str)
+    result[:args] = args
+  end
+
+  check = case result[:op]
     when :transmit
-      check = check_transmit_options(result)
+      check_transmit_options(result)
+    when :exec, :create, :delete, :modify
+      check_file_path_exists(result)
+    else
+      [:ok, :none]
   end
 
   return result if check[0] == :ok
@@ -118,5 +119,10 @@ def check_transmit_options(options)
   return [:error, 'a destination'] unless options[:dest]
   return [:error, 'data to transmit'] unless options[:data]
   return [:error, 'a port'] unless options[:port]
+  [:ok, :none]
+end
+
+def check_file_path_exists(options)
+  return [:error, 'a file path'] unless options[:file_path]
   [:ok, :none]
 end
