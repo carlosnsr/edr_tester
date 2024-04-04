@@ -11,8 +11,8 @@ This EDR Tester generates activity by being called with the appropriate command 
 ### Executing an executable file
 
 `
-edr_tester [--exec | -x] <file path>
-edr_tester [--exec | -x] <file path> -- <arguments>
+edr_tester [--exec | -x] [--file, -f] <file path>
+edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
 `
 
 - the given executable file will be executed (with the given arguments, if any)
@@ -27,7 +27,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 
 ### Creating a file
 
-`edr_tester [--create | -c] <file path> [--bin | --text]`
+`edr_tester [--create | -c] [--file, -f] <file path> [--bin | --text]`
 
 - creates a binary/text file at the given location
 - the following details will be logged:
@@ -41,7 +41,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 
 ### Deleting a file
 
-`edr_tester [--delete | -d] <file path>`
+`edr_tester [--delete | -d] [--file, -f] <file path>`
 
 - deletes the file at the given location
 - the following details will be logged:
@@ -55,7 +55,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 
 ### Modifying a file
 
-`edr_tester [--modify | -m] <file path>`
+`edr_tester [--modify | -m] [--file, -f] <file path>`
 
 - modify the file at the given location
 - detects if the file is binary or text and appends some cruft
@@ -92,7 +92,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
 - [x] handle command line arguments
 - [x] run on mac
 - [ ] run on windows/linux
-- [ ] log entire process command line
+- [x] log entire process command line
 - [ ] handle multiple operations on command line
 - [ ] one page description
 - [x] start a process
@@ -135,7 +135,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [x] log it
     - [ ] test logging
     - [x] update readme
-- [ ] network connection and transmit
+- [x] network connection and transmit
     - [x] cmd line params: dest, port, data
     - [x] connects?
     - [ ] response?
