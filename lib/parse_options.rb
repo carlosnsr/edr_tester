@@ -77,7 +77,8 @@ def parse_options
         result[:op] = :transmit
       # modifiers
       when '--file'
-        result[:file_path] = arg
+        os_file_path = File.join(arg.split(%r#[/\\]#))
+        result[:file_path] = os_file_path
       when '--bin'
         result[:file_type] = :binary
       when '--text'

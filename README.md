@@ -123,7 +123,9 @@ edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
 - [x] run on mac
 - [ ] run on windows/linux
 - [x] log entire process command line
-- [ ] handle multiple operations on command line
+- [ ] command line parameters
+    - [ ] handle multiple operations
+    - [ ] handle no operation parameter
 - [x] one page description
 - [ ] remove todos from README
 - [ ] refactor
