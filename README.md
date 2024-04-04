@@ -40,10 +40,10 @@ Results will be logged to `edr_tester.log` in JSON.
 
 ### Executing an executable file
 
-`
+```
 edr_tester [--exec | -x] [--file, -f] <file path>
 edr_tester [--exec | -x] [--file, -f] <file path> -- <arguments>
-`
+```
 
 - the given executable file will be executed (with the given arguments, if any)
 - the output is not captured
