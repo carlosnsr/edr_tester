@@ -8,6 +8,7 @@ USAGE = <<~EOF
     edr_tester [--exec | -x] <file path> -- <arguments>
     edr_tester [--create | -c] <file path> [--bin | --text]
     edr_tester [--delete | -d] <file path>
+    edr_tester [--modify | -m] <file path>
 
   operations:
     --help, -h    Displays this usage documentation
@@ -16,6 +17,8 @@ USAGE = <<~EOF
                   is executed.
     --create, -c  Creates a file of the specified type (defaults to text)
     --delete, -d  Deletes the specified file
+    --modify, -m  Modifies the specified file.
+                  Auto-detects if binary or text and appends some cruft
 
   options:
     --bin         Used for creating a binary file
@@ -38,6 +41,7 @@ def parse_options
     ['--exec', '-x', GetoptLong::REQUIRED_ARGUMENT],
     ['--create', '-c', GetoptLong::REQUIRED_ARGUMENT],
     ['--delete', '-d', GetoptLong::REQUIRED_ARGUMENT],
+    ['--modify', '-m', GetoptLong::REQUIRED_ARGUMENT],
     # optionals
     ['--bin', GetoptLong::NO_ARGUMENT],
     ['--text', GetoptLong::NO_ARGUMENT],
@@ -63,6 +67,8 @@ def parse_options
         result.merge!(op: :create, file_path: arg)
       when '--delete'
         return { op: :delete, file_path: arg }
+      when '--modify'
+        return { op: :modify, file_path: arg }
       when '--bin'
         result[:file_type] = :binary
       when '--text'

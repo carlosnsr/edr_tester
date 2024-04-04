@@ -82,7 +82,7 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [ ] test logging
     - [x] update readme
 - [ ] modify a file
-    - [ ] cmd line params: file path, file type
+    - [x] cmd line params: file path, file type
     - [ ] find file at location
     - [ ] exists?
     - [ ] bin? add some crap to the end
