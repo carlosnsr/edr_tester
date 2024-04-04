@@ -22,25 +22,24 @@ begin
     ) + "\n"
   end
 
-  # TODO: change activity descriptors to uppercase, because stand out more and... convention?
   case opts[:op]
     when :none
       logger.info('Did nothing')
     when :exec
       result = exec_file(opts[:file_path], opts[:args])
-      logger.info({ activity_descriptor: "Process Start" }.merge!(result))
+      logger.info({ activity_descriptor: "PROCESS_START" }.merge!(result))
     when :create
       result = create_file(opts[:file_path], opts[:file_type])
-      logger.info({ activity_descriptor: "Create File" }.merge!(result))
+      logger.info({ activity_descriptor: "CREATE_FILE" }.merge!(result))
     when :delete
       result = delete_file(opts[:file_path])
-      logger.info({ activity_descriptor: "Delete File" }.merge!(result))
+      logger.info({ activity_descriptor: "DELETE_FILE" }.merge!(result))
     when :modify
       result = modify_file(opts[:file_path])
-      logger.info({ activity_descriptor: "Modify File" }.merge!(result))
+      logger.info({ activity_descriptor: "MODIFY_FILE" }.merge!(result))
     when :transmit
       result = transmit_data(opts[:dest], opts[:port], opts[:data])
-      logger.info({ activity_descriptor: "Transmit Data" }.merge!(result))
+      logger.info({ activity_descriptor: "TRANSMIT_DATA" }.merge!(result))
     else
       logger.error({ error: "Unexpected Operation" }.merge(opts))
   end
