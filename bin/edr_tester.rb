@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require_relative '../lib/parse_options.rb'
 require_relative '../lib/edr_tester_ops.rb'
 require 'logger'
