@@ -42,6 +42,8 @@ edr_tester [--exec | -x] <file path> -- <arguments>
     - [x] cmd line params: file path, file type
     - [ ] [QUESTION] what types? bin, text, what?
     - [ ] create file at location
+        - [x] text file
+        - [ ] bin file
     - [ ] path exists?
     - [ ] populate with random/preset stuff
     - [ ] log it

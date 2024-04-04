@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'timecop'
+require 'fileutils'
 require 'edr_tester_ops'
 
 describe '.exec_file' do
@@ -80,6 +81,26 @@ describe '.exec_file' do
         process_command_line: cmd,
         error: "File '#{file_path}' does not exist"
       })
+    end
+  end
+end
+
+describe '.create_file' do
+  ROOT = './spec/tmp'
+  around do |example|
+    FileUtils.mkdir(ROOT, mode: 0700)
+    example.run
+  ensure
+    FileUtils.rm_rf(ROOT)
+  end
+
+  context 'given a file path and a file type of text' do
+    let(:file_path) { "#{ROOT}/text_file" }
+    let(:file_type) { :text }
+
+    it 'creates a file at the specified location' do
+      expect { create_file(file_path, file_type) }
+        .to change { Dir.children(ROOT).count }.by(1)
     end
   end
 end

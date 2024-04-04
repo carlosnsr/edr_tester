@@ -22,3 +22,11 @@ def exec_file(file_path, args = [])
     process_id: pid
   }
 end
+
+TEXT_CONTENT = 'Lorem ipsum dolor sit amet'
+
+def create_file(file_path, file_type)
+  File.open(file_path, 'w') do |f|
+    f.write(TEXT_CONTENT)
+  end
+end

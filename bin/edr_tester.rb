@@ -24,8 +24,11 @@ begin
     when :exec
       result = exec_file(opts[:file_path], opts[:args])
       logger.info({ operation: "Process Start" }.merge(result))
+    when :create
+      result = create_file(opts[:file_path], opts[:file_type])
+      logger.info({ operation: "Create File" }.merge(result))
     else
-      logger.debug("Unexpected operation. #{opts.to_json}")
+      logger.error({ error: "Unexpected Operation" }.merge(opts))
   end
 
 ensure
