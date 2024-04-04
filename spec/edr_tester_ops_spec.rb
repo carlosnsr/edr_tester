@@ -29,12 +29,11 @@ describe '.exec_file' do
       exec_file(file_path)
     end
 
-    it 'returns the start time, user, cmd, and pid' do
+    it 'returns the start time, cmd, and pid' do
       expect(exec_file(file_path)).to eq({
         start_time: time,
-        username: user,
         process_command_line: cmd,
-        process_id: pid
+        spawned_process_id: pid
       })
     end
   end
@@ -51,12 +50,11 @@ describe '.exec_file' do
       exec_file(file_path, args)
     end
 
-    it 'returns the start time, user, cmd, and pid' do
+    it 'returns the start time, cmd, and pid' do
       expect(exec_file(file_path, args)).to eq({
         start_time: time,
-        username: user,
         process_command_line: cmd,
-        process_id: pid
+        spawned_process_id: pid
       })
     end
   end
@@ -75,9 +73,8 @@ describe '.exec_file' do
       exec_file(file_path, args)
     end
 
-    it 'returns the user, command line and error' do
+    it 'returns the command line and error' do
       expect(exec_file(file_path, args)).to eq({
-        username: user,
         process_command_line: cmd,
         error: "File '#{file_path}' does not exist"
       })
@@ -87,6 +84,7 @@ end
 
 describe '.create_file' do
   ROOT = './spec/tmp'
+
   around do |example|
     FileUtils.mkdir(ROOT, mode: 0700)
     example.run

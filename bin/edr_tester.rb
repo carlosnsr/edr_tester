@@ -8,12 +8,16 @@ require 'json'
 begin
   opts = parse_options
 
+  user = ENV['USER'] || ENV['USERNAME']
+  # set up the logger to output JSON
   logger = Logger.new('edr_tester.log', progname: $PROGRAM_NAME)
   logger.formatter = proc do |severity, time, progname, hash|
     JSON.dump(
       severity: severity,
       timestamp: time,
-      progname: progname,
+      username: user,
+      process_id: Process.pid,
+      process_name: progname,
       **hash
     ) + "\n"
   end
