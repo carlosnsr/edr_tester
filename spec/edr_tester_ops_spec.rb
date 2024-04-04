@@ -98,9 +98,10 @@ describe '.create_file' do
     let(:file_path) { "#{ROOT}/text_file" }
     let(:file_type) { :text }
 
-    it 'creates a file at the specified location' do
+    it 'creates a file at the specified location with the default text' do
       expect { create_file(file_path, file_type) }
         .to change { Dir.children(ROOT).count }.by(1)
+      expect(File.readlines(file_path)).to eq([CONTENT])
     end
   end
 end
